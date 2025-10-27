@@ -7,8 +7,7 @@ function Layout() {
   return (
     <>
       <Header />
-      <main>
-        klkl
+      <main className="px-4 w-full">
         <Outlet />
       </main>
       <Footer />
