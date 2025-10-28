@@ -7,6 +7,6 @@ export type Movie = {
   description?: string;
   director: string;
   actors: string[];
-  genre: string | string[];
+  genre: string[];
   isFavorite: boolean;
 };

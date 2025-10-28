@@ -13,7 +13,7 @@ export function Header() {
             <Searchbar />
           </li>
           <li>
-            <Link to={"/"}>
+            <Link to={"/favorites"}>
               <MdFavorite className="text-2xl cursor-pointer hover:text-pink-400" />
             </Link>
           </li>

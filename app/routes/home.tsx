@@ -1,7 +1,6 @@
 import { getMovies } from "~/api/moviesApi";
 import type { Route } from "./+types/home";
-import { MoviesList } from "~/components/MoviesList/MoviesList";
-import { useSearchParams } from "react-router";
+import { MoviesLayout } from "~/components/MoviesLayout/MoviesLayout";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -19,31 +18,10 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 export default function Home({ loaderData }: Route.ComponentProps) {
   const { movies, next } = loaderData;
-  const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = searchParams.get("page") || 0;
-
-  function handleLoadMore() {
-    setSearchParams(
-      {
-        q: searchParams.get("q") || "",
-        page: (+currentPage + 1).toString(),
-      },
-      { preventScrollReset: true }
-    );
-  }
 
   return (
     <>
-      <h1>h</h1>
-      <MoviesList movies={movies} />
-      {next && (
-        <button
-          onClick={handleLoadMore}
-          className="my-4 px-3 py-1 rounded border cursor-pointer block m-auto"
-        >
-          Load more
-        </button>
-      )}
+      <MoviesLayout movies={movies} next={next} title="All movies" />
     </>
   );
 }

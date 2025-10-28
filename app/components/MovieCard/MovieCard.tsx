@@ -1,12 +1,13 @@
-import React from "react";
 import { Link } from "react-router";
 import type { Movie } from "~/types/Movie";
 import { MdFavorite, MdFavoriteBorder, MdStar } from "react-icons/md";
+import { useToggleFavorite } from "~/hooks/useToggleFavorite";
 
 type MovieCardProps = {
   movie: Movie;
 };
 export function MovieCard({ movie }: MovieCardProps) {
+  const {isFavorite, handleToggle} = useToggleFavorite(movie.id as string, movie.isFavorite)
   return (
     <article className="w-[200px] h-auto flex flex-col justify-between">
       <div className="w-full rounded relative">
@@ -15,8 +16,11 @@ export function MovieCard({ movie }: MovieCardProps) {
           src={movie.image}
           alt={movie.title}
         />
-        <div className="cursor-pointer absolute top-1 right-1 text-2xl hover:scale-[1.1] p-1 rounded-full bg-black/75">
-          {movie.isFavorite ? (
+        <div
+          className="cursor-pointer absolute top-1 right-1 text-2xl hover:scale-[1.1] p-1 rounded-full bg-black/75"
+          onClick={handleToggle}
+        >
+          {isFavorite ? (
             <MdFavorite className="align-middle" />
           ) : (
             <MdFavoriteBorder className="align-middle" />
@@ -24,7 +28,10 @@ export function MovieCard({ movie }: MovieCardProps) {
         </div>
       </div>
       <div className="py-2 px-1">
-        <Link to={"/"} className="text-lg">
+        <Link
+          to={`/movies/${movie.id}`}
+          className="text-lg hover:text-yellow-400 transition-colors"
+        >
           {movie.title}
         </Link>
         <div className="flex items-center justify-between">
