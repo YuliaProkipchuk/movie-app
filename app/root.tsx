@@ -9,6 +9,9 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { Link } from "react-router";
+import { Header } from "./components/Layout/Header/Header";
+import { Footer } from "./components/Layout/Footer/Footer";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -16,6 +19,11 @@ export const links: Route.LinksFunction = () => [
     rel: "preconnect",
     href: "https://fonts.gstatic.com",
     crossOrigin: "anonymous",
+  },
+  {
+    rel: "icon",
+    href: "/movieLogo.svg",
+    type: "image/x-icon",
   },
   {
     rel: "stylesheet",
@@ -46,30 +54,41 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
-  let stack: string | undefined;
-
+  let isNotFound = "Oops!";
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
-      error.status === 404
-        ? "The requested page could not be found."
-        : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
+    isNotFound = error.status === 404 ? "404" : "Error";
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <>
+      <Header />
+      <main className="pt-16 p-4 container mx-auto">
+        <div className="max-w-[1200px] m-auto text-center py-20">
+          <h1 className="text-3xl font-bold mb-4">
+            {isNotFound ? "Movie Not Found" : "Oops!"}
+          </h1>
+          <p className="text-gray-400 mb-6">
+            {isNotFound
+              ? "The movie you're looking for doesn't exist."
+              : "Something went wrong. Please try again later."}
+          </p>
+          <div className="flex gap-4 justify-center">
+            <Link
+              to="/"
+              className="px-4 py-1 bg-red-500 rounded hover:bg-red-600"
+            >
+              Go Home
+            </Link>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-1 bg-gray-700 rounded hover:bg-gray-600"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 }

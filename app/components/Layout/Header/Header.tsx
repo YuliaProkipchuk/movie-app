@@ -5,7 +5,9 @@ import { Searchbar } from "./Searchbar";
 export function Header() {
   return (
     <header className="h-20 px-4 py-2 flex justify-between items-center backdrop-blur-2xl sticky top-0 left-0 z-50 w-full">
-      <Link to={"/"}>M</Link>
+      <Link to={"/"}>
+      <img src="/public/movieLogo.svg" alt="logo" />
+      </Link>
 
       <nav>
         <ul className="flex gap-5 items-center">

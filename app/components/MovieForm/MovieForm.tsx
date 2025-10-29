@@ -46,7 +46,7 @@ function MovieForm({ movie, mode }: FormProps) {
       actors,
       genres,
       rating,
-      id as string
+      id
     );
     const errors = await validateForm(data);
     if (Object.keys(errors).length !== 0) {
@@ -66,7 +66,7 @@ function MovieForm({ movie, mode }: FormProps) {
 
   function addActor() {
     if (inputs.actor && inputs.actor.trim()) {
-      setActors((prev) => [inputs.actor as string, ...prev]);
+      setActors((prev) => [inputs.actor, ...prev]);
       setInputs((prev) => ({
         ...prev,
         actor: "",
@@ -80,7 +80,7 @@ function MovieForm({ movie, mode }: FormProps) {
   }
   function addGenre() {
     if (inputs.genre && inputs.genre.trim()) {
-      setGenres((prev) => [inputs.genre as string, ...prev]);
+      setGenres((prev) => [inputs.genre, ...prev]);
       setInputs((prev) => ({
         ...prev,
         genre: "",
@@ -92,161 +92,175 @@ function MovieForm({ movie, mode }: FormProps) {
       }));
     }
   }
+  function deleteActor(name: string) {
+    const data = actors.filter((actor) => actor !== name);
+    setActors(data);
+  }
+  function deleteGenre(name: string) {
+    const data = genres.filter((genre) => genre !== name);
+    setGenres(data);
+  }
   return (
     <>
-      <main className="w-full px-4">
-        <section className="max-w-[1200px] m-auto">
-          <Form
-            method="post"
-            className="space-y-5 rounded p-3 bg-gray-800 w-full sm:w-[80%] md:w-1/2
+      <section className="max-w-[1200px] m-auto">
+        <Form
+          method="post"
+          className="space-y-5 rounded py-5 px-3 bg-gray-800 w-full sm:w-[80%] md:w-1/2
              m-auto"
-            onSubmit={handleSubmit}
-          >
-            <div className="flex flex-col gap-1">
-              <label htmlFor="title">Title *</label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                defaultValue={defaultData.title}
-                className="rounded border px-2 py-1"
-                required
-              />
-              {errors.title && (
-                <p className="text-[12px] text-red-400">{errors.title}</p>
-              )}
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="image">Image *</label>
-              <input
-                type="url"
-                name="image"
-                id="image"
-                className="rounded border px-2 py-1"
-                defaultValue={defaultData.image}
-                required
-              />
-              {errors.image && (
-                <p className="text-[12px] text-red-400">{errors.image}</p>
-              )}
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="release_date">Release Date</label>
-              <input
-                type="date"
-                name="release_date"
-                id="release_date"
-                defaultValue={defaultData.release_date}
-                className="rounded border px-2 py-1"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="director">Director</label>
-              <input
-                type="text"
-                name="director"
-                id="director"
-                defaultValue={defaultData.director}
-                className="rounded border px-2 py-1"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="description">Description</label>
-              <textarea
-                name="description"
-                id="description"
-                defaultValue={defaultData.description}
-                className="rounded border px-2 py-1"
-              />
-              {errors.description && (
-                <p className="text-[12px] text-red-400">{errors.description}</p>
-              )}
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="actor">Actors</label>
-              {errors.actor && (
-                <p className="text-[12px] text-red-400 order-3">
-                  {errors.actor}
-                </p>
-              )}
-              <div>
-                <input
-                  type="text"
-                  name="actor"
-                  id="actor"
-                  value={inputs.actor}
-                  onChange={handleChange}
-                  className="rounded border px-2 py-1"
-                />
-                <button
-                  type="button"
-                  className="px-3 py-1 rounded bg-white text-black cursor-pointer"
-                  onClick={addActor}
-                >
-                  Add
-                </button>
-              </div>
-              <ul>
-                {actors.map((actor, i) => (
-                  <li key={`${actor}-${i}`}>
-                    <span className="mr-3">{actor}</span>{" "}
-                    <button
-                      className="align-middle cursor-pointer hover:text-red-400"
-                      // onClick={() => deleteActor(actor)}
-                    >
-                      <MdDelete />
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="flex flex-col gap-1">
-              <label htmlFor="genre">Genres</label>
-              {errors.genre && (
-                <p className="text-[12px] text-red-400 order-3">
-                  {errors.genre}
-                </p>
-              )}
-              <div>
-                <input
-                  type="text"
-                  name="genre"
-                  id="genre"
-                  value={inputs.genre}
-                  onChange={handleChange}
-                  className="rounded border px-2 py-1"
-                />
-                <button
-                  type="button"
-                  className="px-3 py-1 rounded bg-white text-black cursor-pointer"
-                  onClick={addGenre}
-                >
-                  Add
-                </button>
-              </div>
-              <ul>
-                {genres.map((genre, i) => (
-                  <li key={`${genre}-${i}`}>{genre}</li>
-                ))}
-              </ul>
-            </div>
-            <Rating
-              rating={rating}
-              rate={(newRating: number) => setRating(newRating)}
+          onSubmit={handleSubmit}
+        >
+          <div className="flex flex-col gap-1">
+            <label htmlFor="title">Title *</label>
+            <input
+              type="text"
+              name="title"
+              id="title"
+              defaultValue={defaultData.title}
+              className="rounded border px-2 py-1"
+              required
             />
-            {errors.general && (
-              <p className="text-[12px] text-red-400">{errors.general}</p>
+            {errors.title && (
+              <p className="text-[12px] text-red-400">{errors.title}</p>
             )}
-            <button
-              type="submit"
-              className="px-3 py-1 rounded bg-white text-black cursor-pointer"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "Submitting..." : "Submit"}
-            </button>
-          </Form>
-        </section>
-      </main>
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="image">Image *</label>
+            <input
+              type="url"
+              name="image"
+              id="image"
+              className="rounded border px-2 py-1"
+              defaultValue={defaultData.image}
+              required
+            />
+            {errors.image && (
+              <p className="text-[12px] text-red-400">{errors.image}</p>
+            )}
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="release_date">Release Date</label>
+            <input
+              type="date"
+              name="release_date"
+              id="release_date"
+              defaultValue={defaultData.release_date}
+              className="rounded border px-2 py-1"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="director">Director</label>
+            <input
+              type="text"
+              name="director"
+              id="director"
+              defaultValue={defaultData.director}
+              className="rounded border px-2 py-1"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="description">Description</label>
+            <textarea
+              name="description"
+              id="description"
+              defaultValue={defaultData.description}
+              className="rounded border px-2 py-1"
+            />
+            {errors.description && (
+              <p className="text-[12px] text-red-400">{errors.description}</p>
+            )}
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="actor">Actors</label>
+            {errors.actor && (
+              <p className="text-[12px] text-red-400 order-3">{errors.actor}</p>
+            )}
+            <div>
+              <input
+                type="text"
+                name="actor"
+                id="actor"
+                value={inputs.actor}
+                onChange={handleChange}
+                className="rounded border px-2 py-1 w-[80%] mr-2 mb-2"
+              />
+              <button
+                type="button"
+                className="px-3 py-1 rounded bg-white text-black cursor-pointer"
+                onClick={addActor}
+              >
+                Add
+              </button>
+            </div>
+            <ul>
+              {actors.map((actor, i) => (
+                <li key={`${actor}-${i}`}>
+                  <span className="inline-block mr-3 min-w-[120px]">
+                    {actor}
+                  </span>{" "}
+                  <button
+                    className="align-middle cursor-pointer hover:text-red-400"
+                    onClick={() => deleteActor(actor)}
+                  >
+                    <MdDelete />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="genre">Genres</label>
+            {errors.genre && (
+              <p className="text-[12px] text-red-400 order-3">{errors.genre}</p>
+            )}
+            <div className="w-full">
+              <input
+                type="text"
+                name="genre"
+                id="genre"
+                value={inputs.genre}
+                onChange={handleChange}
+                className="rounded border px-2 py-1 w-[80%] mr-2 mb-2"
+              />
+              <button
+                type="button"
+                className="px-3 py-1 rounded bg-white text-black cursor-pointer"
+                onClick={addGenre}
+              >
+                Add
+              </button>
+            </div>
+            <ul>
+              {genres.map((genre, i) => (
+                <li key={`${genre}-${i}`}>
+                  <span className="inline-block mr-3 min-w-[120px]">
+                    {genre}
+                  </span>{" "}
+                  <button
+                    className="align-middle cursor-pointer hover:text-red-400"
+                    onClick={() => deleteGenre(genre)}
+                  >
+                    <MdDelete />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Rating
+            rating={rating}
+            rate={(newRating: number) => setRating(newRating)}
+          />
+          {errors.general && (
+            <p className="text-[12px] text-red-400">{errors.general}</p>
+          )}
+          <button
+            type="submit"
+            className="px-5 py-1 rounded bg-white text-black block m-auto cursor-pointer"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Submitting..." : "Submit"}
+          </button>
+        </Form>
+      </section>
     </>
   );
 }

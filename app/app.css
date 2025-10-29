@@ -7,26 +7,21 @@
 
 html,
 body {
-  @apply bg-gray-950;
-  /* @apply bg-white dark:bg-gray-950; */
+  @apply bg-neutral-950;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
 }
-
+main{
+  min-height: calc(100vh - 160px);
+}
 .stars {
   position: relative;
   cursor: pointer;
-  /* width: 320px; */
   height: 30px;
   display: flex;
   gap: 4px;
-  /* background: #ac5e67; */
-  /* background-image: url('./assets/Group.svg');
-  background-repeat: repeat-x;
-  overflow: hidden;
-  z-index: 1; */
 }
 .star {
   height: 33px;

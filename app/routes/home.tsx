@@ -5,7 +5,11 @@ import { MoviesLayout } from "~/components/MoviesLayout/MoviesLayout";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "Movie App" },
-    { name: "description", content: "Welcome to React Router!" },
+    {
+      name: "description",
+      content:
+        "A user-friendly app for adding, viewing, editing, and deleting movies from the catalog.",
+    },
   ];
 }
 

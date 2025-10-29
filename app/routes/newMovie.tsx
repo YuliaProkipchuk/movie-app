@@ -1,25 +1,15 @@
-import { createMovie, getMovies } from "~/api/moviesApi";
+import { createMovie } from "~/api/moviesApi";
 import type { Route } from "./+types/home";
-import { useState } from "react";
-import Rating from "~/components/shared/Raiting";
-import {
-  Form,
-  redirect,
-  useActionData,
-  useNavigation,
-  useSubmit,
-} from "react-router";
+import { redirect } from "react-router";
 import type { Movie } from "~/types/Movie";
 import { validateForm } from "~/utils/validateForm";
-import { ValidationErrors, type FormErrors } from "~/types/Errors";
-import { MdDelete } from "react-icons/md";
-import { getDataForValidation } from "~/utils/getDataForValidation";
+import { type FormErrors } from "~/types/Errors";
 import MovieForm from "~/components/MovieForm/MovieForm";
 
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "New Movie" },
-    { name: "description", content: "Welcome to React Router!" },
+    { name: "description", content: "Add new movie to the list" },
   ];
 }
 
@@ -47,5 +37,12 @@ export async function action({ request }: Route.ActionArgs) {
   }
 }
 export default function NewMoviePage() {
-  return <MovieForm movie={null} mode="create" />;
+  return (
+    <>
+      <main className="w-full px-4">
+        <h1 className="text-center py-4 font-bold text-3xl">New Movie</h1>
+        <MovieForm movie={null} mode="create" />
+      </main>
+    </>
+  );
 }

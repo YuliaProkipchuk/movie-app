@@ -10,8 +10,8 @@ type MovieLayoutProps = {
 export function MoviesLayout({ movies, next, title }: MovieLayoutProps) {
   const { loadMore } = useLoadMore();
   return (
-    <>
-      <h1>{title}</h1>
+    <section className="max-w-[1200px] m-auto space-y-5">
+      <h1 className="text-4xl font-bold">{title}</h1>
       <MoviesList movies={movies} />
       {next && (
         <button
@@ -21,6 +21,6 @@ export function MoviesLayout({ movies, next, title }: MovieLayoutProps) {
           Load more
         </button>
       )}
-    </>
+    </section>
   );
 }

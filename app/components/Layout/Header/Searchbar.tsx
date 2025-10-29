@@ -3,6 +3,7 @@ import { useLocation, useSearchParams } from "react-router";
 import { useDebounce } from "~/hooks/useDebounce";
 const DELAY = 300;
 const SEARCH_ROUTES = ["/", "/favorites"];
+
 export function Searchbar() {
   const debounce = useDebounce();
   const [_, setSearchParams] = useSearchParams();

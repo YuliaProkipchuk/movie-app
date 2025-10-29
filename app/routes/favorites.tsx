@@ -5,7 +5,7 @@ import { MoviesLayout } from "~/components/MoviesLayout/MoviesLayout";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "Favorites" },
-    { name: "description", content: "Welcome to React Router!" },
+    { name: "description", content: "Favorite movies and wishlist" },
   ];
 }
 

@@ -7,7 +7,7 @@ type MovieCardProps = {
   movie: Movie;
 };
 export function MovieCard({ movie }: MovieCardProps) {
-  const {isFavorite, handleToggle} = useToggleFavorite(movie.id as string, movie.isFavorite)
+  const {isFavorite, handleToggle} = useToggleFavorite(movie.id, movie.isFavorite)
   return (
     <article className="w-[200px] h-auto flex flex-col justify-between">
       <div className="w-full rounded relative">
