@@ -14,3 +14,42 @@ body {
     color-scheme: dark;
   }
 }
+
+.stars {
+  position: relative;
+  cursor: pointer;
+  /* width: 320px; */
+  height: 30px;
+  display: flex;
+  gap: 4px;
+  /* background: #ac5e67; */
+  /* background-image: url('./assets/Group.svg');
+  background-repeat: repeat-x;
+  overflow: hidden;
+  z-index: 1; */
+}
+.star {
+  height: 33px;
+  width: 33px;
+}
+.small-star,
+.star {
+  background-image: url("./assets/Star-mask.svg");
+  background-repeat: no-repeat;
+  transition: background-image 0.2s ease;
+  background-size: contain;
+
+}
+.small-star {
+  background-size: contain;
+}
+.star:hover,
+.star-filled {
+  background-image: url("./assets/Star-filled.svg");
+}
+.star:has(~ .star:hover) {
+  background-image: url("./assets/Star-filled.svg");
+}
+.star:hover ~ .star-filled {
+  background-image: url("./assets/Star-mask.svg");
+}

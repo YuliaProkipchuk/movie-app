@@ -9,7 +9,7 @@ export function Header() {
 
       <nav>
         <ul className="flex gap-5 items-center">
-          <li>
+          <li className="w-[180px] sm:w-[70%]">
             <Searchbar />
           </li>
           <li>
@@ -18,7 +18,7 @@ export function Header() {
             </Link>
           </li>
           <li>
-            <Link to={"/"}>
+            <Link to={"/movies/new"}>
               <MdOutlineAdd className="text-2xl cursor-pointer hover:text-pink-400" />
             </Link>
           </li>

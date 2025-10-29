@@ -5,6 +5,6 @@ export type MovieInput = {
   release_date: string;
   description?: string;
   director?: string;
-  actors?: string[];
-  genre?: string | string[];
+  actor?: string;
+  genre?: string ;
 };

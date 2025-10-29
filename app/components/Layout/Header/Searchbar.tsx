@@ -16,8 +16,8 @@ export function Searchbar() {
     }, DELAY);
   }
   return (
-    <form action={path}>
-      <div className="flex gap-1 items-center p-1 rounded-full border border-gray-400 focus-within:border-white text-white w-[150px]">
+    <form action={path} className="w-full">
+      <div className="flex gap-1 items-center p-1 rounded-full border border-gray-400 focus-within:border-white text-white w-full">
         <MdOutlineSearch className="text-2xl" />
         <input
           type="search"

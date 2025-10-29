@@ -1,5 +1,5 @@
-import { getMovieById } from "~/api/moviesApi";
-import type { Route } from "./+types/movies.[id]";
+import { deleteMovie, editMovie, getMovieById } from "~/api/moviesApi";
+import type { Route } from "./+types/$id";
 import type { Movie } from "~/types/Movie";
 import {
   MdDelete,
@@ -9,6 +9,10 @@ import {
   MdStar,
 } from "react-icons/md";
 import { useToggleFavorite } from "~/hooks/useToggleFavorite";
+import { useState } from "react";
+import Rating from "~/components/shared/Raiting";
+import { useRating } from "~/hooks/useRating";
+import { Link, useNavigate } from "react-router";
 
 export function meta({ loaderData }: Route.MetaArgs) {
   return [
@@ -21,6 +25,9 @@ export async function loader({ params }: Route.LoaderArgs) {
   return (await getMovieById(params.id)) as Movie;
 }
 export default function MoviePage({ loaderData: movie }: Route.ComponentProps) {
+  const navigate = useNavigate();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { rating, rateMovie } = useRating(Math.round(movie.rating));
   const { isFavorite, handleToggle } = useToggleFavorite(
     movie.id as string,
     movie.isFavorite
@@ -28,9 +35,20 @@ export default function MoviePage({ loaderData: movie }: Route.ComponentProps) {
   const displayGenres = movie.genre.join(", ");
   const displayActors = movie.actors.join(", ");
 
-  async function handleDelete(){
-    
+  async function handleRate(newRating: number) {
+    await rateMovie(movie.id as string, newRating);
   }
+  async function handleDelete() {
+    try {
+      setIsDeleting(true);
+      await deleteMovie(movie.id as string);
+      navigate('/')
+    } catch (error) {
+    } finally {
+      setIsDeleting(false);
+    }
+  }
+
   return (
     <section className="max-w-[1200px] m-auto">
       <article className="flex flex-col md:flex-row items-center md:items-start md:gap-7 xl:gap-10">
@@ -51,13 +69,13 @@ export default function MoviePage({ loaderData: movie }: Route.ComponentProps) {
             )}
           </div>
         </div>
-        <div className="md:flex-2">
+        <div className="w-full md:flex-2">
           <div className="flex m-auto md:mx-0 w-fit">
-            <h1 className="py-2 text-3xl font-bold text-center md:text-left mr-3">
+            <h1 className="py-2 text-3xl font-bold text-center md:text-left mr-3 w-fit">
               {movie.title}
             </h1>
             <div className="flex items-center gap-1">
-              <MdStar /> <span>{movie.rating}</span>
+              <MdStar /> <span>{rating}</span>
             </div>
           </div>
           <p className="text-gray-400 text-sm text-center mb-5 md:text-left">
@@ -88,14 +106,28 @@ export default function MoviePage({ loaderData: movie }: Route.ComponentProps) {
                 </li>
               </ul>
             </div>
+            <Rating rating={rating} rate={handleRate} />
             <div className="flex gap-2">
-              <button className="flex-1 rounded-full border py-1 flex justify-center items-center gap-3 hover:text-black hover:bg-white cursor-pointer transition-colors">
+              <Link
+                to={`/movies/${movie.id}/edit`}
+                className="flex-1 rounded-full border py-1 flex justify-center items-center gap-3 hover:text-black hover:bg-white cursor-pointer transition-colors"
+              >
                 Edit
                 <MdModeEdit />
-              </button>
-              <button className="flex-1 rounded-full py-1 flex justify-center items-center gap-3 bg-red-400 hover:text-black hover:bg-white cursor-pointer transition-colors">
-                Delete
-                <MdDelete />
+              </Link>
+              <button
+                disabled={isDeleting}
+                className="flex-1 rounded-full py-1 flex justify-center items-center gap-3 bg-red-400 disabled:bg-red-300 hover:text-black hover:bg-white cursor-pointer transition-colors"
+                onClick={handleDelete}
+              >
+                {isDeleting ? (
+                  "Deleting..."
+                ) : (
+                  <>
+                    Delete
+                    <MdDelete />
+                  </>
+                )}
               </button>
             </div>
           </div>

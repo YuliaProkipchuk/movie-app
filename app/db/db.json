@@ -4,7 +4,7 @@
       "id": "1",
       "title": "The Shawshank Redemption",
       "image": "https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_SX300.jpg",
-      "rating": 9.3,
+      "rating": 7,
       "release_date": "1994-09-23",
       "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
       "director": "Frank Darabont",
@@ -44,7 +44,7 @@
       "id": "3",
       "title": "The Dark Knight",
       "image": "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX300.jpg",
-      "rating": 9,
+      "rating": 6,
       "release_date": "2008-07-18",
       "description": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests.",
       "director": "Christopher Nolan",
@@ -203,6 +203,23 @@
         "Thriller"
       ],
       "isFavorite": false
+    },
+    {
+      "title": "Spirited Away",
+      "image": "https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg",
+      "description": "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits.(((",
+      "actors": [
+        "Rumi Hiiragi",
+        "Mari Natsuki"
+      ],
+      "genre": [
+        "Adventure"
+      ],
+      "rating": 8,
+      "director": "Hayao Miyazaki",
+      "isFavorite": false,
+      "release_date": "2025-10-08",
+      "id": "hmBOgwt"
     }
   ]
 }

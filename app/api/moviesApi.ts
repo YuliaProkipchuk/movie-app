@@ -61,3 +61,32 @@ export async function toggleFavorites(id: string, isFavorite: boolean) {
   } catch (error) {}
 }
 
+export async function createMovie(data: Omit<Movie, "id">) {
+  try {
+    await fetch(`${BASE_URL}/movies/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  } catch (error) {}
+}
+export async function editMovie(id: string, data: Partial<Movie>) {
+  try {
+    await fetch(`${BASE_URL}/movies/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...data }),
+    });
+  } catch (error) {}
+}
+export async function deleteMovie(id: string) {
+  try {
+    await fetch(`${BASE_URL}/movies/${id}`, {
+      method: "DELETE",
+    });
+  } catch (error) {}
+}
